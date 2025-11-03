@@ -313,15 +313,42 @@ if 'files_ok' not in st.session_state:
 # Header
 st.title("Dentist Scheduling Analysis Tool")
 st.markdown("This tool analyses appointment and RO Lines data to generate insights and targeted customers list")
+with st.expander("Show Required File Columns **( Get the input files from Qrvey )**"):
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        **Appointments Lines File must contain:**
+        - `VIN`
+        - `Appointment_id`
+        - `Created Date`
+        - `Customer_name`
+        - `Customer_email`
+        - `Customer_phone`
+        - `Customer_id`
+        - `Planned Date`
+        - `Vehicle`
+        - `sc_name`
+        - `Op Code`
+        - `reporting_status`
+        """)
+    with col2:
+        st.markdown("""
+        **Repair Orders Lines File must contain:**
+        - `vehicle_vin`
+        - `open_date`
+        - `sc_name`
+        - `closed_date`
+        - `customer_id`
+        """)
 st.divider()
 
 # --- 1. File Upload Section ---
 st.header("1. Upload Data Files")
 col1, col2 = st.columns(2)
 with col1:
-    appointments_file = st.file_uploader("Upload Appointments File", type=["csv", "xlsx"], help="Upload the file with appointment lines. The app automatically finds the header.")
+    appointments_file = st.file_uploader("Upload Appointments Lines File", type=["csv", "xlsx"], help="Upload the file with appointment lines. The app automatically finds the header.")
 with col2:
-    repair_orders_file = st.file_uploader("Upload Repair Orders File", type=["csv", "xlsx"], help="Upload the file with repair order history. Required for lapsed vehicle analysis.")
+    repair_orders_file = st.file_uploader("Upload Repair Orders Lines File", type=["csv", "xlsx"], help="Upload the file with repair order history. Required for lapsed vehicle analysis.")
 
 if appointments_file and repair_orders_file:
     if st.button("Load and Validate Files", use_container_width=True):
